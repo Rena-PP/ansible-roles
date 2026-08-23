@@ -1,0 +1,6 @@
+---
+# tasks file for common
+
+- name: set timezone to Europe/Paris
+  timezone:
+    name: Europe/Paris

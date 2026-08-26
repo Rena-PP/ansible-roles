@@ -1,3 +1,8 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for common
+
+timezone: Europe/Moscow
+swap_file: /swapfile
+swap_size: 1G
+

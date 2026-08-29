@@ -1,6 +1,10 @@
 ---
 # tasks file for common
 
+- name: set hostname
+  hostname:
+    name: "{{ inventory_hostname  }}"
+
 - name: set timezone to Europe/Moscow
   timezone:
     name: "{{ timezone }}"

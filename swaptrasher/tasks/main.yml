@@ -1,0 +1,25 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for swaptrasher
+
+- name: check if swap is currently active for this file
+  shell: swapon --show --no-header | grep -q "^{{ swap_file }}[[:space:]]"
+  register: swap_active_check
+  changed_when: false
+  failed_when: false
+
+- name: disable swap if active
+  shell: swapoff "{{ swap_file }}"
+  when: swap_active_check.rc == 0
+
+- name: remove swap file if it exists
+  file:
+    path: "{{ swap_file }}"
+    state: absent
+
+- name: clean swap entry from fstab
+  lineinfile:
+    path: /etc/fstab
+    line: "{{ swap_file }} none swap sw 0 0"
+    state: absent
+    backup: yes

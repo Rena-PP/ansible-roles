@@ -1,0 +1,21 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for ssh_setup
+
+- name: Create .ssh directory
+  file:
+    path: "/home/{{ user_name }}/.ssh"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: '0700'
+  become: yes
+
+- name: Install SSH public key
+  copy:
+    content: "{{ ssh_public_key }}\n"
+    dest: "/home/{{ user_name }}/.ssh/authorized_keys"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: '0600'
+  become: yes

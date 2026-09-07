@@ -4,10 +4,12 @@
 - name: set hostname
   hostname:
     name: "{{ inventory_hostname  }}"
+  become: yes
 
 - name: set timezone to Europe/Moscow
   timezone:
     name: "{{ timezone }}"
+  become: yes
 
 - block:
     - name: create a swap file
@@ -39,3 +41,10 @@
         passno: 0
         dump: 0
         state: present
+  become: yes
+
+- name: update apt cache
+  apt:
+    update_cache: yes
+  become: yes
+  become_user: root

@@ -1,0 +1,21 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for add_user
+
+- name: Create users
+  user:
+    name: "{{ user_name }}"
+    shell: /bin/bash
+    state: present
+    groups: sudo
+    append: true
+  become: yes
+
+- name: Configure sudo without password
+  ansible.builtin.copy:
+    dest: "/etc/sudoers.d/{{ user_name }}"
+    content: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL\n"
+    owner: root
+    group: root
+    mode: '0440'
+  become: true

@@ -1,0 +1,13 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for sudoers
+
+- name: Configure sudo without password
+  copy:
+    dest: "/etc/sudoers.d/{{ item }}"
+    content: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL\n"
+    owner: root
+    group: root
+    mode: '0440'
+  loop: "{{ users_to_create }}"
+  become: yes
